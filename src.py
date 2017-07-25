@@ -7,13 +7,6 @@ import numpy as np
 from scipy.special import binom
 from scipy.stats import beta
 
-_binomial_coeffs = np.array([binom(n, j) for j in range(0,n+1)])
-
-def f_value(u, v, coeffs):
-    return np.dot(coeffs, \
-                  [_binomial_coeffs[j]*_binomial_coeffs[k] * u**j * (1-u)**(n-j) * v**k * (1-v)**(n-k) \
-                   for k in range(0,n+1) for j in range(0,n+1)])
-
 def MCMC_42(n, data_x, data_l):
                 
     def _N_0(j,k):
@@ -99,6 +92,13 @@ trace, mean = MCMC_42(n, data_x, data_l)(1000,200,20)
 ############################
 %matplotlib inline
 import matplotlib.pyplot as plt
+
+_binomial_coeffs = np.array([binom(n, j) for j in range(0,n+1)])
+
+def f_value(u, v, coeffs):
+    return np.dot(coeffs, \
+                  [_binomial_coeffs[j]*_binomial_coeffs[k] * u**j * (1-u)**(n-j) * v**k * (1-v)**(n-k) \
+                   for k in range(0,n+1) for j in range(0,n+1)])
 
 delta = 0.025
 x = np.arange(0, 1, delta)
